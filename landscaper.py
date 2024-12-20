@@ -17,43 +17,116 @@ list of tools? each tool can be the object/dictonary to determain what it does.
 
 '''
 
-tools = [
-    {"name": "Teeth", "earnings": 1, "cost": 0},
-    {"name": "Rusty Scissors", "earnings": 5, "cost": 5},
-    {"name": "Old Lawn Mower", "earnings": 25, "cost": 50},
-    {"name": "Push Lawn Mower", "earnings": 50, "cost": 500},
-    {"name": "Electric Lawn Mower", "earnings": 100, "cost": 100},
-    {"name": "Riding Mower", "earnings": 200, "cost": 200},
-    {"name": "Hedge Trimmer", "earnings": 300, "cost": 300},
-    {"name": "Leaf Blower", "earnings": 400, "cost": 400},
-    {"name": "Chainsaw", "earnings": 500, "cost": 500},
-    {"name": "Garden Tractor", "earnings": 600, "cost": 600},
-    {"name": "Mini Excavator", "earnings": 700, "cost": 700},
-    {"name": "Backhoe Loader", "earnings": 800, "cost": 800},
-    {"name": "Skid-Steer Loader", "earnings": 900, "cost": 900},
-    {"name": "Front-End Loader", "earnings": 1000, "cost": 1000},
-    {"name": "Bulldozer", "earnings": 1500, "cost": 1500}
-]
 
 
-class User:
-    def __init__(self, name, money, tool):
-        self.name = name
-        self.money = 0
-        self.tool_index = 0
-    def cutGrass(self):
-        self.money += self.tool.earnings
-    def upgradeTool(self, money, tool):
-        #upgrade from current tool to next tool. incriment i to keep up with it. 
-        
 
 
-class tools:
+
+class Tool:
     def __init__(self, name, earnings, cost):
-        
         self.name = name
         self.earnings = earnings
         self.cost = cost
-    
-    
+
+tools = [
+    Tool("Teeth", 1, 0),
+    Tool("Rusty Scissors", 5, 5),
+    Tool("Old Lawn Mower", 25, 50),
+    Tool("Push Lawn Mower", 50, 500),
+    Tool("Electric Lawn Mower", 100, 100),
+    Tool("Riding Mower", 200, 200),
+    Tool("Hedge Trimmer", 300, 300),
+    Tool("Leaf Blower", 400, 400),
+    Tool("Chainsaw", 500, 500),
+    Tool("Garden Tractor", 600, 600),
+    Tool("Mini Excavator", 700, 700),
+    Tool("Backhoe Loader", 800, 800),
+    Tool("Skid-Steer Loader", 900, 900),
+    Tool("Front-End Loader", 1000, 1000),
+    Tool("Bulldozer", 1500, 1500)
+]
+
+class User:
+    def __init__(self, name):
+        self.name = name
+        self.money = 0
+        self.tool_index = 0
+
+    def cut_grass(self):
+        current_tool = tools[self.tool_index]
+        self.money += current_tool.earnings
+        print(f"{self.name} cut grass with {current_tool.name} and earned {current_tool.earnings} dollars!")
+
+    def upgrade_tool(self):
+        next_tool_index = self.tool_index + 1
+        if next_tool_index < len(tools):
+            next_tool = tools[next_tool_index]
+            if self.money >= next_tool.cost:
+                self.money -= next_tool.cost
+                self.tool_index = next_tool_index
+                print(f"{self.name} upgraded to {next_tool.name}!")
+            else:
+                print("Not enough money to upgrade.")
+        else:
+            print("No more tools to upgrade to.")
+
+    def display_tools(self):
+        for tool in tools:
+            print(f"Tool: {tool.name}, Earnings: {tool.earnings}, Cost: {tool.cost}")
+
+
+def choiceFunction():
+    print(f"you have ${user.money} what would you like to do?")
+    print(prompt)
+    choice = int(input("Please choose 1, 2, 3, or  4        "))
+    if choice == 1:
+        user.cut_grass()
+        choiceFunction()
+    elif choice == 2:
+        user.upgrade_tool()
+        choiceFunction()
+    elif choice == 3:
+        user.display_tools()
+        choiceFunction()
         
+    elif choice == 4:
+        quit()
+    else:
+        print(f"{user.name}... you know better... dont make me come over there.")
+
+prompt = f'''
+1 = cut grass 
+2 = upgrade to next tool
+3 = display list of all tools
+4 = quit game
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'''
+
+
+user = User(input("enter your name  "))
+print(f"hello {user.name} you are about to cut some grass. please choose from the following {prompt}")
+
+
+choiceFunction() 
+
+# print(f"{user.current_tool}")
+# user.cut_grass() 
+# user.cut_grass() 
+# user.upgrade_tool()  
+# user.display_tools()  
+
